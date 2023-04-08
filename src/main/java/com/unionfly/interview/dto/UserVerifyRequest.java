@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class UserRegisterRequest {
+public class UserVerifyRequest {
     @NotBlank
     @Email
     private String email;
