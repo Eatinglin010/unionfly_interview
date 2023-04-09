@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.unionfly.interview.dao.UserDao;
 import com.unionfly.interview.service.UserService;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,7 @@ public class AuthorizationCheckFilter extends OncePerRequestFilter{
     private UserService userService;
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
-        if(!req.getServletPath().equals("/users/login")&&!req.getServletPath().equals("/users/register")){
+        if(!req.getServletPath().equals("/user/login")&&!req.getServletPath().equals("/user/register")){
             String authorHeader =  req.getHeader(AUTHORIZATION);
             if(authorHeader!= null){
                 try{
@@ -43,7 +44,7 @@ public class AuthorizationCheckFilter extends OncePerRequestFilter{
                     userService.isVerify(authorHeader);
                     chain.doFilter(req, res);
 
-                }catch(Exception e){
+                }catch(MalformedJwtException e){
                     System.err.println("Error : "+e);
                     res.setStatus(FORBIDDEN.value());
 

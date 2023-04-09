@@ -35,7 +35,7 @@ public class UserDaoImpl implements UserDao {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(userId));
         List<User> users = mongoTemplate.find(query, User.class);
-        return users!=null?users.get(0):null;
+        return users.size()!=0?users.get(0):null;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
         Query query = new Query();
         query.addCriteria(Criteria.where("email").is(email));
         List<User> users = mongoTemplate.find(query, User.class,"user");
-        return users!=null?users.get(0):null;
+        return users.size()!=0?users.get(0):null;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class UserDaoImpl implements UserDao {
         Query query = new Query();
         query.addCriteria(Criteria.where("jwt").is(jwt));
         List<User> users = mongoTemplate.find(query, User.class,"user");
-        return users!=null?users.get(0):null;
+        return users.size()!=0?users.get(0):null;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class UserDaoImpl implements UserDao {
         }if(user.getEmail()!=null){
             update.set("email",user.getEmail());
         }if(user.getAccount()!=null){
-            update.set("acount",user.getAccount());
+            update.set("account",user.getAccount());
         }if(user.getJwt()!=null){
             update.set("jwt",user.getJwt());
         }

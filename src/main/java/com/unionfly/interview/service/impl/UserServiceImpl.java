@@ -5,6 +5,7 @@ import com.unionfly.interview.dto.UserRegisterRequest;
 import com.unionfly.interview.model.User;
 import com.unionfly.interview.service.UserService;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -73,8 +74,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void isVerify(String jwt) {
+        User user = userDao.getUserByJwt(jwt);
         if(userDao.getUserByJwt(jwt)==null){
-            throw new NotAcceptableStatusException("身分驗證錯誤");
+            throw new MalformedJwtException("身分驗證錯誤");
         }
+        System.out.println("通過驗證");
     }
 }

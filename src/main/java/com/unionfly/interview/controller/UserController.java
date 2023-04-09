@@ -36,7 +36,7 @@ public class UserController {
     public ResponseEntity<String> searchByJwt(HttpServletRequest req){
         String authorization =  req.getHeader(AUTHORIZATION);
         User user = userService.getAcountByJwt(authorization);
-        return  ResponseEntity.status(HttpStatus.OK).body(user.getAccount());
+        return  ResponseEntity.status(HttpStatus.OK).body("登入者身分為:"+user.getAccount());
     }
 
     @GetMapping("/user/{userId}")
